@@ -3,7 +3,8 @@ description: Travis play build env template
 push:
   name: travis-ci/play
 variables:
-  travis_cookbooks_branch: "precise-stable"
+  # travis_cookbooks_branch: "precise-stable"
+  travis_cookbooks_branch: "master"
   travis_cookbooks_sha: ""
   gce_account_file: "{{ env `GCE_ACCOUNT_FILE` }}"
   gce_image_name: "travis-play-trusty-{{ timestamp }}"
@@ -66,15 +67,9 @@ provisioners:
   - "/tmp/chef-stuff/travis-cookbooks/cookbooks"
   - "/tmp/chef-stuff/travis-cookbooks/community-cookbooks"
   - "/tmp/chef-stuff/travis-cookbooks/ci_environment"
-  json:
-    travis_packer_templates:
-      job_board:
-        languages:
-        - ruby
-        - python
-        - whatever
+  json: {}
   run_list:
-  - recipe[travis_packer_templates]
+  - recipe[travis_ci_minimal]
 - type: shell
   inline: while true ; do date -u ; echo tick ; sleep 60 ; done
   only:
